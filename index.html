@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maeghasree Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color-dark: #1a1a1a;
+      --secondary-bg-dark: #242424;
+      --text-color-dark: #e3d5ca;
+      --accent-color-dark: #c7a693;
+      --highlight-color-dark: #e6b8a2;
+      --muted-text-dark: #a09484;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color-dark);
+      color: var(--text-color-dark);
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1f1f1f;
+      color: #fff;
+      padding: 1rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: #00bcd4;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #80deea;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #1f1f1f;
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        padding: 1rem;
+      }
+      nav.active {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    section {
+      padding: 6rem 2rem 4rem;
+      perspective: 1000px;
+    }
+
+    .hero {
+      background: radial-gradient(circle at top, #212121, #000);
+      text-align: center;
+      padding: 12rem 2rem 8rem;
+    }
+
+    .hero h2 {
+      font-size: 3.5rem;
+      color: var(--accent-color-dark);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--muted-text-dark);
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--highlight-color-dark);
+    }
+
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--muted-text-dark);
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: var(--secondary-bg-dark);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      transition: transform 0.6s ease, box-shadow 0.4s ease;
+      transform: rotateY(0deg) scale(1);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: rotateY(10deg) scale(1.05);
+      box-shadow: 0 25px 50px rgba(230,184,162,0.5);
+    }
+
+    .card h3 {
+      color: var(--accent-color-dark);
+    }
+
+    .card p {
+      color: var(--text-color-dark);
+    }
+
+     .contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact input, .contact textarea {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--secondary-bg-dark);
+      color: var(--text-color-dark);
+    }
+
+    .contact button {
+      padding: 0.75rem;
+      border: none;
+      background: var(--highlight-color-dark);
+      color: #1a1a1a;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .contact button:hover {
+      background: var(--accent-color-dark);
+    }
+    footer {
+      background: #000;
+      color: #aaa;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .toggle-mode {
+      position: fixed;
+      top: 90px;
+      right: 20px;
+      background: var(--highlight-color-dark);
+      color: #1a1a1a;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 6px;
+      z-index: 9999;
+    }
+
+    .resume-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 12px 24px;
+      background-color: var(--accent-color-dark);
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      border: none; /* removed the black border */
+    }
+
+    .resume-btn:hover,
+    .resume-btn:active {
+      box-shadow: 0 0 12px var(--accent-color-dark), 0 0 20px var(--accent-color-dark);
+      transform: scale(1.03);
+      color: black; /* keep text color black on hover/click */
+    }
+
+    .project-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background-color: var(--accent-color-dark); /* Beige tone */
+      color: black; /* Changed text color to black */
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: none; /* Removed glow effect on hover */
+    }
+        .contact-icons {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 1.6rem;
+}
+
+.contact-icons a {
+  color: var(--accent-color-dark); /* or any theme color you're using */
+  transition: color 0.3s ease;
+}
+
+.contact-icons a:hover {
+  color: var(--highlight-color-dark); /* or a hover color */
+}
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Set to 3 columns */
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .projects {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .projects {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
+}
+
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+  <header>
+    <h1>My Portfolio</h1>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav id="navbar">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <button class="toggle-mode" onclick="toggleMode()" title="Toggle Light/Dark Mode">
+  <i class="fas fa-moon"></i> 
+</button>
+<section class="hero">
+  <h2>Happy day!! This is Maeghasree</h2>
+  <p>Well-versed in Python, SQL, Excel, Power BI and OOP.</p>
+
+  <div class="contact-icons">
+    <a href="mailto:maegha526@email.com" title="Email">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="https://linkedin.com/in/maeghasree" target="_blank" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://github.com/Ciri00" target="_blank" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="tel:+91 9384286256" title="Call">
+      <i class="fas fa-phone-alt"></i>
+    </a>
+  </div>
+
+  <a href="RESUME.pdf" download class="resume-btn">Download Resume</a>
+</section>
+  <section id="about" class="about" style="background-color: var(--secondary-bg-dark); padding: 3rem 1.5rem; color: var(--text-color-dark);">
+    <h2 class="section-title" style="color: var(--highlight-color-dark); text-align: center; margin-bottom: 1.5rem;">About Me</h2>
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+  <p>
+    Computer Science graduate passionate about data analytics and solving real-world problems with data.
+  </p> <br>
+  <p>
+    I enjoy analyzing and visualizing data to uncover insights and support decisions. With hands-on experience in 
+    <strong>Excel</strong>, <strong>Python (pandas, seaborn, matplotlib)</strong>, <strong>SQL</strong>, 
+    <strong>Power BI</strong> and <strong>Tableau</strong>, I’ve built dashboards, automation tools and reports that prioritize clarity.
+  </p> <br>
+  <p>
+    My CS background strengthens my problem-solving and programming approach. I’m seeking an entry-level role in 
+    <strong>data analysis</strong>, <strong>business intelligence</strong>, or <strong>analytics engineering</strong> — 
+    where I can grow and contribute with purpose.
+  </p>
+</div>
+
+</div>
+
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills">
+      <div class="card">
+        <h3>Data Visualization</h3>
+        <p>Power BI, Tableau, Excel (PivotTables, VLOOKUP, formulas)</p>
+      </div>
+      <div class="card">
+        <h3>Data Handling</h3>
+        <p>Power Query, DAX, Exploratory Data Analysis, Data Cleaning, Data Modelling</p>
+      </div>
+      <div class="card">
+        <h3>Databases</h3>
+        <p>MySQL, Google BigQuery</p>
+      </div>
+      <div class="card">
+        <h3>Python Programming</h3>
+        <p>Pandas, NumPy, Matplotlib, Seaborn, requests, sqlite3, Sweetviz Dash, Streamlit, OOP, Data Structures</p>
+      </div>
+      <div class="card">
+        <h3>Machine Learning</h3>
+        <p>scikit-learn, Jupyter Notebooks</p>
+      </div>
+      <div class="card">
+        <h3>Tools & Collaboration</h3>
+        <p>Git, GitHub, Linux, Visual Studio Code</p>
+      </div>
+      <div class="card">
+        <h3>Soft Skills</h3>
+        <p>Good with data stories, solving problems, critical-thinking and working with others</p>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="projects">
+  <h2 class="section-title">Projects</h2>
+  <div class="projects">
+        <div class="card">
+      <h3>Cosmetic Analyzer</h3>
+      <p>Analyzed 1,472 Sephora moisturizers for dry skin using Python (Pandas, scikit-learn, Bokeh, TextBlob). Parsed ingredient lists to flag allergens, engineered features (e.g., ingredient count, price/ingredient), and clustered products using t-SNE and K-Means. Built an interactive Bokeh dashboard to explore ingredient-based similarities. Trained Random Forest models to predict ratings. Found that cheaper products often matched premium ones in formulation, and that alcohol and fragrance appeared in ~40% and ~30% of products—helping users make safer, smarter skincare choices.</p>
+      <a href="https://github.com/Ciri00/cosmetic-skincare-analyzer.git" class="project-btn" target="_blank">View on GitHub</a>
+    </div>
+    <div class="card">
+      <h3>World Happiness EDA</h3>
+      <p>Explored the World Happiness Report (2011–2024) using Python (Pandas, Seaborn, Matplotlib) and Jupyter Notebook. Cleaned and analyzed global happiness scores, GDP, social support and life expectancy. Created visualizations to uncover regional trends—highlighting how Nordic countries consistently rank highest in happiness metrics.</p>
+      <a href="https://github.com/Ciri00/world-happiness-eda.git" class="project-btn" target="_blank">View on GitHub</a>
+    </div>
+        <div class="card">
+      <h3>HR-Analytics</h3>
+      <p>Analyzed employee performance, attrition and demographics using a raw HR dataset. Cleaned and standardized data by handling missing values and duplicates. Created three interactive dashboards—in Excel, Power BI and Tableau—to uncover attrition patterns, department-wise performance and tenure-based insights. Applied EDA techniques to support data-driven HR decisions.</p>
+      <a href="https://github.com/Ciri00/HR-Analytics.git" class="project-btn" target="_blank">View on GitHub</a>
+    </div>
+    <div class="card">
+      <h3>Inventory analysis</h3>
+      <p>Developed a real-time inventory dashboard in Power BI using live Google Sheets data. Tracked stock levels, reorder needs and supplier performance across 20 products. Built custom measures to highlight low-stock risks and used DAX to drive actionable insights. Designed a clean, interactive layout with visuals for inventory health and restocking trends.</p>
+      <a href="https://github.com/Ciri00/Inventory_analysis.git" class="project-btn" target="_blank">View on GitHub</a>
+    </div>
+    <div class="card">
+      <h3>Reddit Scrapper</h3>
+      <p>Built a custom Reddit data scraper from scratch to extract posts, nested comments and metadata from the food subreddit using the PRAW API. Structured raw Reddit data into clean JSON format and laid the foundation for advanced analysis by filtering content, capturing media links and preserving comment hierarchy for contextual insights</p>
+      <a href="https://github.com/Ciri00/Inventory_analysis.git" class="project-btn" target="_blank">View on GitHub</a>
+    </div>
+
+  </div>
+</section>
+
+
+  <section id="experience" class="about">
+    <h2 class="section-title">Experience</h2>
+    <div class="card">
+      <h3>Data Analytics Trainee</h3>
+      <p>MedTourEasy - June 2025 </p>
+      <p>Worked on Exploratory Data Analysis</Data> and visualization projects using Python and Power BI, contributing to actionable insights for business decisions.</p>
+    </div>
+  </section>
+
+  <section id="certifications" class="about">
+    <h2 class="section-title">Certifications</h2>
+    <div class="card">
+      <p>Google Data Analytics Professional Certification - Coursera</p>
+      <p>Data Analytics with Python - NPTEL</p>
+      <p>Google Business Intelligence Certification - Coursera</p>
+      <p>Artificial Intelligence - ICT Academy</p>
+    </div>
+  </section>
+
+  <section id="education" class="about">
+    <h2 class="section-title">Education</h2>
+    <p><strong>Bachelor of Technology in Computer Science & Engineering </strong><br> Manakula Vinayagar Institute of Technology, 2021–2025 <br> CGPA: 7.73</p>
+    <p><strong>HSC</strong>, Sairam Vidyalaya, 2021 - 91% </p>
+  </section>
+
+    <section id="contact" class="contact">
+    <h2 class="section-title">Contact Me</h2>
+    <form action="mailto:yourname@example.com" method="post" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+  
+  <footer>
+    &copy; 2025 Your Name. All rights reserved.
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navbar').classList.toggle('active');
+    }
+
+    const root = document.documentElement;
+    let isDark = true;
+    function toggleMode() {
+      isDark = !isDark;
+      root.style.setProperty('--bg-color-dark', isDark ? '#1a1a1a' : '#f7f3f0');
+      root.style.setProperty('--secondary-bg-dark', isDark ? '#242424' : '#e3d5ca');
+      root.style.setProperty('--text-color-dark', isDark ? '#e3d5ca' : '#1a1a1a');
+      root.style.setProperty('--accent-color-dark', isDark ? '#c7a693' : '#8b5e3c');
+      root.style.setProperty('--highlight-color-dark', isDark ? '#e6b8a2' : '#b77b5e');
+      root.style.setProperty('--muted-text-dark', isDark ? '#a09484' : '#5e4c45');
+      document.body.style.backgroundColor = getComputedStyle(root).getPropertyValue('--bg-color-dark');
+      document.body.style.color = getComputedStyle(root).getPropertyValue('--text-color-dark');
+    }
+
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const particlesArray = [];
+    const colors = ['#e3d5ca', '#c7a693', '#e6b8a2'];
+    for (let i = 0; i < 120; i++) {
+      particlesArray.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
